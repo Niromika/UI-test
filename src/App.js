@@ -1,26 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import SideMenu from './components/SideMenu/SideMenu';
+import Header from './components/Header/Header';
+import Home from './components/Home/Home';
+
+const AppStyled = styled.div`
+  display: flex;
+  font-family: Roboto;
+  min-height: 100%;
+
+  .flex-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+`
+
+class App extends React.Component {
+  state = {
+    isOpen: false
+  };
+
+  toggleSideMenu = () => {
+    this.setState(prevState => ({isOpen: !prevState.isOpen}));
+  }
+  
+  render () {
+    return (
+      <AppStyled>
+          <SideMenu className="side-menu" isOpen={this.state.isOpen} />
+          <div className="flex-container">
+            <Header className="header" isOpen={this.state.isOpen} toggleSideMenu={this.toggleSideMenu} />
+            <Home className="home" />
+          </div>
+      </AppStyled>
+    )
+  }
 }
 
 export default App;
